@@ -1,0 +1,68 @@
+{% extends 'base/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title %} Registro {% endblock %}
+
+{% block content %}
+<h2>Validar Datos del Alumno</h2>
+</br>
+<div class="container">
+  <form method="post">{% csrf_token %}
+    <div class="row">
+      <div class="col-md-3 col-md-offset-2">
+          <div class="form-group">
+            {{ form.matricula|as_crispy_field }}
+          </div>
+      </div>
+      <div class="col-md-7 col-md-offset-2">
+          <div class="form-group">
+            {{ form.nombre|as_crispy_field }}
+          </div>
+      </div>
+      <div class="col-md-2 col-md-offset-2">
+          <div class="form-group">
+            {{ form.cuatrimestre|as_crispy_field }}
+          </div>
+      </div>
+      <div class="col-md-4 col-md-offset-2">
+          <div class="form-group">
+            {{ form.id_grupo|as_crispy_field }}
+          </div>
+      </div>
+      <div class="col-md-2 col-md-offset-2">
+          <div class="form-group">
+           {{ form.generacion_tsu|as_crispy_field }}
+          </div>
+      </div>
+      <div class="col-md-2 col-md-offset-2">
+          <div class="form-group">
+            {{ form.generacion_ing|as_crispy_field }}
+          </div>
+      </div>
+      <div class="col-md-2 col-md-offset-2">
+          <div class="form-group">
+            {{ form.id_status_tsu|as_crispy_field }}
+          </div>
+      </div>
+      <div class="col-md-2 col-md-offset-2">
+          <div class="form-group">
+            {{ form.id_status_ing|as_crispy_field }}
+          </div>
+      </div>
+      <div class="col-md-6 col-md-offset-2">
+          <div class="form-group">
+            {{ form.id_carrera|as_crispy_field }}
+          </div>
+      </div>
+      <div class="col-md-6 col-md-offset-2">
+          <div class="form-group">
+            {{ form.id_carrera_ing|as_crispy_field }}
+          </div>
+      </div>
+      <div class="container" align="center">
+          <button type="submit" class="btn btn-primary" style="margin: 10px;">Guardar</button>
+      </div>
+  </form>
+</div>
+{% endblock %}

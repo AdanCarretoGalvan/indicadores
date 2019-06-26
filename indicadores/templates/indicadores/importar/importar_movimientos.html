@@ -1,0 +1,20 @@
+{% extends "base/base.html" %}
+{% load staticfiles %}
+
+{% block title %}Importaciones | Movimientos {% endblock %}
+{% block content %}
+  
+{% endblock %}
+<!--class Movimientos(models.Model):
+    cuatrimestre = models.IntegerField()
+    fecha = models.DateField()
+    id_alumno = models.ForeignKey(Alumno, on_delete=models.CASCADE)
+    id_tipo_movimiento = models.ForeignKey(Tipo_movimiento, on_delete=models.CASCADE)
+    id_carrera = models.ForeignKey(Carreras, on_delete=models.CASCADE, verbose_name='Carrera')
+    id_grupo = models.ForeignKey(Grupo, on_delete=models.CASCADE)
+    #descripcion = models.CharField(max_length=300,blank=True, null=True)
+    class Meta:
+        verbose_name = 'Movimiento'
+        verbose_name_plural = 'Movimientos'
+    def __str__(self):
+        return '%s del alumn@ %s' % (self.id_tipo_movimiento, self.id_alumno)-->

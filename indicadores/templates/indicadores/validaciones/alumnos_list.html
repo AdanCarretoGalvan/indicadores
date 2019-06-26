@@ -1,0 +1,84 @@
+{% extends "base/base.html" %}
+{% load staticfiles %}
+
+{% block title %}Datos Alumnos{% endblock %}
+
+{% block extrahead %}
+    <!--<link rel="stylesheet" type="text/css" href="{% static 'css/tablas.css' %}">-->
+{% endblock %}
+
+{% block content %}
+
+<h1 align="center">Catálogo Alumnos</h1>
+
+<div class="input-group col-md-2 mb-0" style="margin-left: 15px;">
+  <input type="text" class="form-control" placeholder="CUATRI" aria-label="CUATRI" aria-describedby="basic-addon2" id="cuatri" style="width: 200px; border-radius: 5px; margin-right: 25px;">
+  <div class="input-group-append">
+    <button class="btn btn-outline-primary" type="button" id="btn1">Calcular</button>
+  </div>
+</div>
+<br /><br />
+
+<div id="datos">
+  <div class="container">
+  <table id="tabla" class="table table-hover results" cellspacing="0" width="100%">
+  <thead id="tblhead">
+    <tr>
+      <th>Id</th>
+      <th>Nombre</th>
+      <th>Matricula</th>      
+      <th>Cuatrimestre</th>
+      <th>Grupo</th>
+      <th>Carrera TSU</th>
+      <th>Carrera ING</th>
+      <th>Generación TSU</th>
+      <th>Generación ING</th>
+      <th>Status TSU</th>
+      <th>Status ING</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+</div>
+</div>
+<script>
+    function datos(){
+      $('#tabla').DataTable({
+        "destroy": true,
+        "processing": true,
+        "language": {
+          "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+        },
+        "ajax": {
+          "processing": true,
+          "url": "{% url 'alumajax' %}",
+          "data": {
+          'cuatri': $("#cuatri").val(),
+        },
+          "dataSrc": ""
+        },
+        "columns":[
+          { "data": "pk"},
+          { "data": "fields.nombre"},
+          { "data": "fields.matricula"},
+          { "data": "fields.cuatrimestre"},
+          { "data": "fields.id_grupo"},
+          { "data": "fields.id_carrera"},
+          { "data": "fields.id_carrera_ing"},
+          { "data": "fields.generacion_tsu"},
+          { "data": "fields.generacion_ing"},
+          { "data": "fields.id_status_tsu"},
+          { "data": "fields.id_status_ing"},
+        ]
+      });
+    } 
+    $(document).ready(function(){
+      $("#btn1").click(function(){
+        datos();
+      });
+    });
+    
+  </script>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'base/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title %} Registro {% endblock %}
+
+{% block content %}
+<h2>Validar Datos de Movimiento</h2>
+</br>
+<div class="container">
+  <form method="post">
+    {% csrf_token %}
+    <div class="row">
+      <div class="col-md-10 col-md-offset-2">
+          <div class="form-group">
+            {{ form.id_carrera|as_crispy_field }}
+          </div>
+      </div>
+      <div class="col-md-2 col-md-offset-2">
+          <div class="form-group">
+            {{ form.cuatrimestre|as_crispy_field }}
+          </div>
+      </div>
+      <div class="col-md-2 col-md-offset-2">
+          <div class="form-group">
+            {{ form.fecha|as_crispy_field }}
+          </div>
+      </div>
+      <div class="col-md-5 col-md-offset-2">
+          <div class="form-group">
+            {{ form.id_tipo_movimiento|as_crispy_field }}
+          </div>
+      </div>
+
+      <div class="col-md-5 col-md-offset-2">
+          <div class="form-group">
+            {{ form.id_grupo|as_crispy_field }}
+          </div>
+      </div>
+    </div>
+    <div class="container" align="center">
+    <button type="submit" class="btn btn-primary" style="margin: 10px;">Guardar</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends "base/base.html" %}
+{% load staticfiles %}
+
+{% block title %}Datos Alumnos{% endblock %}
+
+{% block extrahead %}
+    <!--<link rel="stylesheet" type="text/css" href="{% static 'css/tablas.css' %}">-->
+{% endblock %}
+
+{% block content %}
+
+<h1 align="center">Catálogo de Grupos</h1>
+
+<div class="input-group col-md-2 mb-0" style="margin-left: 15px;">
+  <input type="text" class="form-control" placeholder="CUATRI" aria-label="CUATRI" aria-describedby="basic-addon2" id="cuatri" style="width: 200px; border-radius: 5px; margin-right: 25px;">
+  <input type="text" class="form-control" placeholder="AÑO" aria-label="CUATRI" aria-describedby="basic-addon2" id="anio" style="width: 200px; border-radius: 5px; margin-right: 25px;">
+  <div class="input-group-append">
+    <button class="btn btn-outline-primary" type="button" id="btn1">Calcular</button>
+  </div>
+</div>
+<br /><br />
+
+<div id="datos">
+  <div class="container">
+  <table id="tabla" class="table table-hover results" cellspacing="0" width="100%">
+  <thead id="tblhead">
+    <tr>
+      <th>Id</th>
+      <th>Nombre</th>
+      <th>Cuatrimestre</th>
+      <th>Año</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    </tbody>
+</table>
+</div>
+</div>
+<script>
+    function datos(){
+      $('#tabla').DataTable({
+        "destroy": true,
+        "processing": true,
+        "language": {
+          "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+        },
+        "ajax": {
+          "processing": true,
+          "url": "{% url 'gruajax' %}",
+          "data": {
+          'cuatri': $("#cuatri").val(),
+          'anio': $("#anio").val(),
+        },
+          "dataSrc": ""
+        },
+        "columns":[
+          { "data": "pk"},
+          { "data": "fields.nombre"},
+          { "data": "fields.cuatrimestre"},
+          { "data": "fields.ano"},
+        ]
+      });
+    } 
+    $(document).ready(function(){
+      $("#btn1").click(function(){
+        datos();
+      });
+    });
+    
+  </script>
+{% endblock %}

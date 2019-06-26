@@ -1,0 +1,46 @@
+{% extends "base/base.html" %}
+{% load staticfiles %}
+
+{% block title %}Datos Materias{% endblock %}
+{% block extrahead %}
+
+{% endblock %}
+
+{% block content %}
+<h2>Catálogo Materias</h2>
+
+<div id="datos">
+<div class="container">
+<table id="tabla" class="table table-hover results">
+  <thead id="tblhead" align="center">
+    <tr>
+      <th>Id</th>
+      <th>Nombre</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% if materias %}
+    {% for materia in materias %}
+    <tr>
+      <td>{{ materia.id }}</td>
+      <td>{{ materia.nombre }}</td>
+      <td>
+          <a class="btn btn-primary" href="{% url 'editar_mat' materia.id %}">Editar</a>
+      </td>
+    </tr>
+    {% endfor %}
+    {% else %}
+    <h1>No hay registros</h1>
+    {% endif %}
+  </tbody>
+</table>
+</div>
+</div>
+<script>
+    $(document).ready(function(){
+       $('#tabla').DataTable();
+      });
+    
+  </script>
+{% endblock %}

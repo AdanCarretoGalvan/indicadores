@@ -1,0 +1,184 @@
+{% extends 'base/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}Indice de reprobacion{% endblock %}
+{% block extrahead %}
+
+<style type="text/css">
+#select{
+            margin-top: 3px;
+            padding: 8px;
+            width: 400px;
+        }
+</style>
+
+{% endblock %}
+{% block branding %}
+
+{% endblock %}
+
+{% block nav-global %}
+{% endblock %}
+{% block breadcrumbs %}
+
+{% endblock %}
+{% block content %}
+<h2 id="titulo" name="titulo" class="title">Índice de reprobación Asignatura/Profesor</h2>
+<div class="tab">
+  <button class="tablinks" onclick="openCity(event, 'datos')" id="id_datos">Datos</button>
+  <button class="tablinks" onclick="openCity(event, 'grafica')" id="id_grafica">Gráfica</button>
+  <button class="tablinks" onclick="openCity(event, 'tabla')" id="id_tabla">Tabla</button>
+</div>
+<div id="datos" class="tabcontent">
+
+  <form method="POST" class="post-form" name="formulario"  id="forma" data-cities-url="{% url 'llenamateria' %}" >{% csrf_token %}
+    <div class="row">
+    <div class="col-md-2 col-md-offset-2">
+      <div class="form-group">
+        
+        {{form.ano|as_crispy_field}}
+      </div>
+    </div>
+    <div class="col-md-2 col-md-offset-2">
+      <div class="form-group">
+        {{form.cuatrimestre|as_crispy_field}}
+      </div>
+    </div>
+    <div class="col-md-8 col-md-offset-2">
+      <div class="form-group">
+     
+        {{form1.id_carrera|as_crispy_field}}
+      </div>
+    </div>
+    <div class="col-md-4 col-md-offset-2">
+      <div class="form-group">
+     
+        {{form1.id_materia|as_crispy_field}}
+      </div>
+    </div>
+    <div class="col-md-4 col-md-offset-2">
+      <div class="form-group">
+       
+        {{form2.id_tipo_calificacion|as_crispy_field}}
+      </div>
+    </div>
+    <br>
+    <div class="col-md-4 col-md-offset-2">
+      <div class="form-group">
+        <label>Tipo de grafica: </label>
+        <select name="tipo" required id="select">
+            <option value="bar">Barras</option>
+            <option value="pie" >Circular</option>
+            <option value="line" >Lineal</option>
+            <option value="column" selected>Columnas</option>
+        </select>
+      </div>
+    </div>
+    <br>
+      <br>
+    <div class="container" align="center">
+      <input type="submit" value="Calcular" id="boton" class="btn btn-outline-info">
+    </div>
+    <input type="number" hidden value="{{bandera}}" id="id_band">
+    </div>
+  </form>
+</div>
+
+<div id="grafica" class="tabcontent">
+  <div id="container">            
+  </div>
+</div>
+
+
+<div id="tabla" class="tabcontent">
+  <table class="table table-hover" align="center">
+    <tr align="center">
+      <!--llenar la tabla con los datos-->
+      <td><h3>Grupos</h3></td>
+      <td><h3>Reprobados</h3><td>
+      <td><h3>Profesor</h3><td>
+    </tr>
+    {%for a in lsi%}
+    <tr align="center">
+      <td>{{a.grupo}}</td>
+      <td>{{a.rep}}<td>
+      <td>{{a.profe}}<td>
+    </tr>
+    {%endfor%}
+    <tr align="center">
+      <td><h3>Total</h3></td>
+      <td><h3>{{total}}</h3><td>
+     </tr>
+  </table>
+</div>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script>
+    
+    function datos(){
+      var url = $("#forma").attr("data-cities-url");
+      $.ajax({                       // initialize an AJAX request
+        url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+        data: {
+          'carrera': $("#id_id_carrera").val(),
+          'yea': $("#id_ano").val(),
+          'cua': $("#id_cuatrimestre").val()// add the country id to the GET parameters
+        },
+        success: function (data) {   // `data` is the return of the `load_cities` view function
+          $("#id_id_materia").html(data);
+          var ma = sessionStorage.getItem('mat');
+          $("#id_id_materia").val(ma);
+
+           // replace the contents of the city input with the data that came from the server
+        }
+      });
+    }
+    
+    $("#id_id_carrera").change(datos);
+    $("#id_cuatrimestre").change(datos);
+    $("#id_ano").change(datos);
+  </script>
+</div>
+    <div id="container"></div>
+<script src="https://code.highcharts.com/highcharts.src.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script>
+  Highcharts.chart('container', {{ chart|safe }});
+</script>
+<script type="text/javascript">
+function asigna(){ 
+        var ia = sessionStorage.getItem('idA');
+        var cu = sessionStorage.getItem('cua');
+        var ca = sessionStorage.getItem('idC');
+        var cal = sessionStorage.getItem('iCa');
+        var tg = sessionStorage.getItem('tG');
+        document.formulario.ano.value = ia;
+        document.formulario.cuatrimestre.value = cu;
+        document.formulario.id_carrera.selectedIndex = ca;
+        datos();
+        document.formulario.id_tipo_calificacion.selectedIndex = cal;
+        document.formulario.tipo.selectedIndex = tg;
+
+    }
+
+window.addEventListener('load', openCity(event, 'grafica'), false);
+</script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#forma').submit(function(event){
+
+            var idAnio = document.getElementById('id_ano').value;
+            var idCuatri = document.getElementById('id_cuatrimestre').value;
+            var idCarrera = document.getElementById('id_id_carrera').selectedIndex;
+            var idMateria = document.getElementById('id_id_materia').value;
+            var idCalif = document.getElementById('id_id_tipo_calificacion').selectedIndex;
+            var tipoGrafica = document.getElementById('select').selectedIndex;
+            sessionStorage.setItem('idA', idAnio);
+            sessionStorage.setItem('cua', idCuatri);
+            sessionStorage.setItem('idC', idCarrera);
+            sessionStorage.setItem('mat', idMateria);
+            sessionStorage.setItem('iCa', idCalif);
+            sessionStorage.setItem('tG', tipoGrafica);
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends "base/base.html" %}
+{% load staticfiles %}
+
+{% block title %}Datos Calificaciones{% endblock %}
+
+{% block extrahead %}
+    <!--<link rel="stylesheet" type="text/css" href="{% static 'css/tablas.css' %}">-->
+{% endblock %}
+
+{% block content %}
+
+<h1 align="center">Catálogo Calificaciones</h1>
+
+<div class="input-group col-md-2 mb-0" style="margin-left: 15px;">
+  <input type="text" class="form-control" placeholder="ID" aria-label="ID" aria-describedby="basic-addon2" id="id" style="width: 200px; border-radius: 5px; margin-right: 25px;">
+  <div class="input-group-append">
+    <button class="btn btn-outline-primary" type="button" id="btn1">Calcular</button>
+  </div>
+</div>
+<br />
+
+<div id="datos">
+  <div class="container">
+    <table id="tabla" class="table table-hover results" cellspacing="0" width="100%">
+  <thead id="tblhead">
+    <tr>
+      <th>Id</th>
+      <th>Calificacion</th>
+      <th>Fecha</th>
+      <th>Alumno</th>
+      <th>Horario</th>
+      <th>Tipo</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    </tbody>
+</table>
+  </div>
+</div>
+<script>
+    function datos(){
+      $('#tabla').DataTable({
+        "destroy": true,
+        "processing": true,
+        "language": {
+          "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+        },
+        "ajax": {
+          "processing": true,
+          "url": "{% url 'caliajax' %}",
+          "data": {
+          'id': $("#id").val(),
+        },
+          "dataSrc": ""
+        },
+        "columns":[
+          { "data": "pk"},
+          { "data": "fields.calificacion"},
+          { "data": "fields.fecha"},
+          { "data": "fields.id_alumno"},
+          { "data": "fields.id_horario"},
+          { "data": "fields.id_tipo_calificacion"},
+        ]
+      });
+    } 
+    $(document).ready(function(){
+      $("#btn1").click(function(){
+        datos();
+      });
+    });
+    
+  </script>
+{% endblock %}

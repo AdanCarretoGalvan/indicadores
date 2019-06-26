@@ -1,0 +1,30 @@
+{% extends 'base/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title %} Validar datos {% endblock %}
+
+{% block content %}
+</br>
+</br>
+<h2>Validar Datos de Profesor</h2>
+</br>
+</br>
+<div class="container">
+  <form method="post">
+    {% csrf_token %}
+    <div class="row">
+      <div class="col-md-12 col-md-offset-2">
+          <div class="form-group">
+            {{ form.nombre|as_crispy_field }}
+          </div>
+      </div>
+      <div class="container" align="center">
+          <div class="form-group" style="margin-top: 25px;">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+          </div>
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock %}

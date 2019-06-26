@@ -1,0 +1,76 @@
+{% extends "base/base.html" %}
+{% load staticfiles %}
+
+{% block title %}Importaciones{% endblock %}
+
+{% block extrahead %}
+<style type="text/css">
+	#menus:hover~p{
+		padding: 3px;
+		transition: all 0.3s;
+		color: #fff;
+	}
+	p{
+		padding-top: 10px;
+		color: #000;
+	}
+</style>
+{% endblock %}
+
+{% block content %}
+<h2>Importar Datos</h2>
+<div class="row" align="center" style="margin-left: 25px; margin-top: 100px;">
+   	<div class="col-md-3" align="center">
+    	<div class="form-group">
+        	<a href="" id="menus"><img src="{% static 'images/alumno_icon.png' %}" id="menu"></a>
+        	<p>Alumnos</p>
+    	</div>
+   	</div>
+   	<div class="col-md-3" align="center">
+    	<div class="form-group">
+        	<a href="" id="menus"><img src="{% static 'images/calificaciones_icon.png' %}" id="menu"></a>
+        	<p>Calificaciones</p>
+    	</div>
+   	</div>
+   	<div class="col-md-3" align="center">
+    	<div class="form-group">
+        	<a href="" id="menus"><img src="{% static 'images/carreras_icon.png' %}" id="menu"></a>
+        	<p>Carreras</p>
+    	</div>
+   	</div>
+   	<div class="col-md-3" align="center">
+    	<div class="form-group">
+        	<a href="" id="menus"><img src="{% static 'images/grupos_icon.png' %}" id="menu"></a>
+        	<p>Grupos</p>
+    	</div>
+   	</div>
+</div>
+</br>
+</br>
+<div class="row" align="center" style="margin-left: 25px; margin-top: 50px;">
+   	<div class="col-md-3" align="center">
+    	<div class="form-group">
+        	<a href="" id="menus"><img src="{% static 'images/horarios_icon.png' %}" id="menu"></a>
+        	<p>Horarios</p>
+    	</div>
+   	</div>
+   	<div class="col-md-3" align="center">
+    	<div class="form-group">
+        	<a href="" id="menus"><img src="{% static 'images/materias_icon.png' %}" id="menu"></a>
+        	<p>Materias</p>
+    	</div>
+   	</div>
+   	<div class="col-md-3" align="center">
+    	<div class="form-group">
+        	<a href="/importar_movimientos" id="menus"><img src="{% static 'images/movimientos_icon.png' %}" id="menu"></a>
+        	<p>Movimientos</p>
+    	</div>
+   	</div>
+   	<div class="col-md-3" align="center">
+    	<div class="form-group">
+        	<a href="" id="menus"><img src="{% static 'images/profesores_icon.png' %}" id="menu"></a>
+        	<p>Profesores</p>
+    	</div>
+   	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "base/base.html" %}
+{% load staticfiles %}
+
+{% block title %}Datos Profesores{% endblock %}
+{% block extrahead %}
+
+{% endblock %}
+
+{% block content %}
+<h2>Catálogo Profesores</h2>
+
+<div id="datos">
+<div class="container">
+<table id="tabla" class="table table-hover results">
+  <thead id="tblhead" align="center">
+    <tr>
+      <th>Id</th>
+      <th>Nombre</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% if profe %}
+    {% for profe in profe %}
+    <tr>
+      <td>{{ profe.id }}</td>
+      <td>{{ profe.nombre }}</td>
+      <td>
+        <a class="btn btn-primary" href="{% url 'editar_profe' profe.id %}">Editar</a>
+      </td>
+    </tr>
+    {% endfor %}
+    {% else %}
+    <h1>No hay registros</h1>
+    {% endif %}
+  </tbody>
+</table>
+</div>
+</div>
+<script>
+    $(document).ready(function(){
+       $('#tabla').DataTable();
+      });
+    
+  </script>
+{% endblock %}
